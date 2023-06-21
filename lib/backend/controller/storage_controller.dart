@@ -1,7 +1,32 @@
+import 'package:crud_with_firebase_firestore_storage_getx/backend/constant/item_storage_constant.dart';
+import 'package:crud_with_firebase_firestore_storage_getx/backend/storage/fetch_item.dart';
 import 'package:get/get.dart';
 
 class StorageController extends GetxController {
   List imageUrl = [].obs;
+  final List<String> imagePathStorage = [
+    ItemStoragePath.chair,
+    ItemStoragePath.table
+  ];
 
-  Future<void> getAllImage()async{}
+  RxBool isLoading = false.obs;
+
+  Future<void> getAllImage() async {
+    try {
+      for (final path in imagePathStorage) {
+        final result = await FetchItem.getImages(path);
+        imageUrl.add(result);
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  void onInit() async {
+    isLoading.value = true;
+    getAllImage();
+    isLoading.value = false;
+    super.onInit();
+  }
 }
