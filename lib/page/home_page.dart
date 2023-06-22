@@ -1,5 +1,6 @@
 import 'package:crud_with_firebase_firestore_storage_getx/backend/controller/storage_controller.dart';
 import 'package:crud_with_firebase_firestore_storage_getx/page/buy_page.dart';
+import 'package:crud_with_firebase_firestore_storage_getx/page/insert/cart_insert_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -36,7 +37,7 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(const BuyPage());
+          Get.to(const CartInsertPage());
         },
         child: const Icon(Icons.add),
       ),

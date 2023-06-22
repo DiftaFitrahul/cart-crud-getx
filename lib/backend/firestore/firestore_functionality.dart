@@ -1,0 +1,27 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crud_with_firebase_firestore_storage_getx/model/cart_model.dart';
+import 'package:crud_with_firebase_firestore_storage_getx/model/cart_payload.dart';
+
+FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
+class FirestoreFunctionality {
+  static addCart(CartModel cartModel) async {
+    await firebaseFirestore.collection('carts').add(CartPayload(
+        userName: cartModel.userName,
+        name: cartModel.name,
+        createdAt: cartModel.createdAt,
+        isPaid: cartModel.isPaid,
+        items: cartModel.items));
+  }
+
+  static Stream<List<CartModel>> cartStream() {
+    return firebaseFirestore.collection('carts').snapshots().map((event) {
+      List<CartModel> carts = [];
+      for (var cart in event.docs) {
+        final cartModel = CartModel.fromDocumentSnapshot(docSnapshot: cart);
+        carts.add(cartModel);
+      }
+      return carts;
+    });
+  }
+}

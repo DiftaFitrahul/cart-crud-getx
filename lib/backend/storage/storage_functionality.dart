@@ -5,7 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 final storageRef = FirebaseStorage.instance.ref();
 
-class Storaging {
+class StorageFunctionality {
   static Future<String> getImages(String path) async {
     try {
       final urlRef = storageRef.child(path);

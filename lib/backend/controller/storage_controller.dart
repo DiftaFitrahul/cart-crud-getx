@@ -1,5 +1,5 @@
 import 'package:crud_with_firebase_firestore_storage_getx/backend/constant/item_storage_constant.dart';
-import 'package:crud_with_firebase_firestore_storage_getx/backend/storage/storaging.dart';
+import 'package:crud_with_firebase_firestore_storage_getx/backend/storage/storage_functionality.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 
@@ -15,7 +15,7 @@ class StorageController extends GetxController {
   Future<void> getAllImage() async {
     try {
       for (final path in imagePathStorage) {
-        final result = await Storaging.getImages(path);
+        final result = await StorageFunctionality.getImages(path);
         imageUrl.add(result);
       }
     } catch (e) {
@@ -25,7 +25,7 @@ class StorageController extends GetxController {
 
   Future<void> uploadFileController(PlatformFile pickedFile) async {
     try {
-      await Storaging.uploadImage(pickedFile);
+      await StorageFunctionality.uploadImage(pickedFile);
     } catch (e) {
       rethrow;
     }
