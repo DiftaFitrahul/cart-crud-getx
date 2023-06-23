@@ -6,12 +6,16 @@ FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
 class FirestoreFunctionality {
   static addCart(CartModel cartModel) async {
-    await firebaseFirestore.collection('carts').add(CartPayload(
-        userName: cartModel.userName,
-        name: cartModel.name,
-        createdAt: cartModel.createdAt,
-        isPaid: cartModel.isPaid,
-        items: cartModel.items));
+    try {
+      await firebaseFirestore.collection('carts').add(CartPayload(
+          userName: cartModel.userName,
+          name: cartModel.name,
+          createdAt: cartModel.createdAt,
+          isPaid: cartModel.isPaid,
+          items: cartModel.items));
+    } catch (e) {
+      rethrow;
+    }
   }
 
   static Stream<List<CartModel>> cartStream() {
