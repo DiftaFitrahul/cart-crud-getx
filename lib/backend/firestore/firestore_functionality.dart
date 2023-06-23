@@ -5,7 +5,7 @@ import 'package:crud_with_firebase_firestore_storage_getx/model/cart_payload.dar
 FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
 class FirestoreFunctionality {
-  static addCart(CartModel cartModel) async {
+  static Future<void> addCart(CartModel cartModel) async {
     try {
       await firebaseFirestore.collection('carts').add(CartPayload(
           userName: cartModel.userName,

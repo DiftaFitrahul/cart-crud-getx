@@ -9,7 +9,7 @@ class CartPayload extends MapView<String, dynamic> {
       required String name,
       required String createdAt,
       required bool isPaid,
-      required Map<String, int> items})
+      required Map<String, dynamic> items})
       : super({
           'username': userName,
           'name': name,

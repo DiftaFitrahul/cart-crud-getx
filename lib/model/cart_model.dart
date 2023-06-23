@@ -6,11 +6,10 @@ class CartModel {
   final String name;
   final String createdAt;
   final bool isPaid;
-  final Map<String, int> items;
+  final Map<String, dynamic> items;
 
   CartModel(
-      {
-      this.documentId,  
+      {this.documentId,
       required this.userName,
       required this.name,
       required this.createdAt,

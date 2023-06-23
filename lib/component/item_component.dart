@@ -5,15 +5,28 @@ import 'package:get/get.dart';
 import '../backend/controller/storage_controller.dart';
 
 class ItemComponent extends StatelessWidget {
-  const ItemComponent({super.key});
+  final String imageLinkUrl;
+  final int price;
+  final String name;
+  final String color;
+  final Widget numberItem;
+  final VoidCallback decrementCallback;
+  final VoidCallback incrementCallback;
+  const ItemComponent(
+      {super.key,
+      required this.name,
+      required this.color,
+      required this.price,
+      required this.imageLinkUrl,
+      required this.numberItem,
+      required this.decrementCallback,
+      required this.incrementCallback});
 
   @override
   Widget build(BuildContext context) {
-    final numberItems = Get.put(NumberItems());
-    final getImageUrl = Get.put(StorageController());
     return SizedBox(
       width: double.infinity,
-      height: 150,
+      height: 155,
       child: Row(
         children: [
           SizedBox(
@@ -21,58 +34,48 @@ class ItemComponent extends StatelessWidget {
               child: SizedBox(
                 width: 120,
                 height: 120,
-                child: Image(image: NetworkImage(getImageUrl.imageUrl[0])),
+                child: Image(image: NetworkImage(imageLinkUrl)),
               )),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.symmetric(vertical: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Chair',
-                    style: TextStyle(
+                    name,
+                    style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 15),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
-                  Text('Color: brown',
+                  Text('Color: $color',
                       style: TextStyle(
                           color: Colors.black.withOpacity(0.5), fontSize: 11)),
-                  Expanded(child: SizedBox()),
+                  const Expanded(child: SizedBox()),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '\$${numberItems.chairPrice}',
+                        '\$$price',
                       ),
                       Row(
                         children: [
                           IconButton(
-                            onPressed: () {
-                              if (numberItems.numberChair > 0) {
-                                numberItems.numberChair.value--;
-                              }
-                            },
-                            icon: Icon(Icons.remove),
+                            onPressed: decrementCallback,
+                            icon: const Icon(Icons.remove),
                             padding: EdgeInsets.zero,
-                            constraints: BoxConstraints(),
+                            constraints: const BoxConstraints(),
                           ),
-                          Obx(() => SizedBox(
-                              width: 30,
-                              child: Center(
-                                  child: Text(
-                                      numberItems.numberChair.toString())))),
+                          SizedBox(width: 30, child: Center(child: numberItem)),
                           IconButton(
-                            onPressed: () {
-                              numberItems.numberChair.value++;
-                            },
-                            icon: Icon(Icons.add),
+                            onPressed: incrementCallback,
+                            icon: const Icon(Icons.add),
                             padding: EdgeInsets.zero,
-                            constraints: BoxConstraints(),
+                            constraints: const BoxConstraints(),
                           ),
                         ],
                       )

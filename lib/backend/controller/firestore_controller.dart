@@ -5,10 +5,18 @@ import 'package:get/get.dart';
 class FirestoreController extends GetxController {
   Rx<List<CartModel>> cartList = Rx<List<CartModel>>([]);
   List<CartModel> get carts => cartList.value;
+  RxBool isLoading = false.obs;
 
   @override
   void onReady() {
     cartList.bindStream(FirestoreFunctionality.cartStream());
+    isLoading.value = false;
     super.onReady();
+  }
+
+  @override
+  void onInit() {
+    isLoading.value = true;
+    super.onInit();
   }
 }

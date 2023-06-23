@@ -8,11 +8,14 @@ import 'package:crud_with_firebase_firestore_storage_getx/page/insert/insert_ite
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../backend/controller/storage_controller.dart';
+
 class CartInsertPage extends StatelessWidget {
   const CartInsertPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Get.put(StorageController());
     final textController = Get.put(TextController());
     final itemsController = Get.put(NumberItems());
     final phoneHeight = MediaQuery.of(context).size.height;
@@ -28,22 +31,30 @@ class CartInsertPage extends StatelessWidget {
                 leadingWidth: 0,
                 elevation: 0,
                 backgroundColor: Colors.transparent,
-                leading: IconButton(
-                  onPressed: () => Get.back(),
-                  icon: const Icon(
-                    Icons.arrow_back_ios_sharp,
-                    color: Colors.black,
-                  ),
-                ),
-                flexibleSpace: const Align(
-                  alignment: Alignment(0, 0),
-                  child: Text(
-                    'Shopping Cart',
-                    style: TextStyle(
+                automaticallyImplyLeading: false,
+                flexibleSpace: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back_ios_sharp,
                         color: Colors.black,
-                        fontSize: 21,
-                        fontWeight: FontWeight.w700),
-                  ),
+                      ),
+                    ),
+                    const Align(
+                      alignment: Alignment(0, 0),
+                      child: Text(
+                        'Shopping Cart',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 21,
+                            fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                  ],
                 ),
                 bottom: const TabBar(
                   tabs: [
@@ -75,7 +86,9 @@ class CartInsertPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.back();
+                      },
                       style: ElevatedButton.styleFrom(
                           minimumSize: const Size(double.infinity, 60),
                           elevation: 0,
@@ -91,7 +104,10 @@ class CartInsertPage extends StatelessWidget {
                           name: textController.nameController.text,
                           createdAt: DateTime.now().toString(),
                           isPaid: false,
-                          items: {'chair': itemsController.numberChair.value}));
+                          items: {
+                            'chair': itemsController.numberChair.value,
+                            'table': itemsController.numberTable.value
+                          })).then((_) => Get.back());
                     },
                     style: ElevatedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 60),

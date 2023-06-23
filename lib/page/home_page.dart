@@ -4,36 +4,47 @@ import 'package:crud_with_firebase_firestore_storage_getx/page/insert/cart_inser
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../backend/controller/firestore_controller.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final getImageUrl = Get.put(StorageController());
+    final getData = Get.put(FirestoreController());
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Items Sell'),
       ),
       body: Obx(
-        () => getImageUrl.isLoading.value
+        () => getData.isLoading.value
             ? const Center(
                 child: CircularProgressIndicator(),
               )
-            : ListView.builder(
-                itemCount: getImageUrl.imageUrl.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {},
-                    child: ListTile(
-                      leading:
-                          Image(image: NetworkImage(getImageUrl.imageUrl[0])),
-                      title: const Text('Difta'),
-                      subtitle: const Text('Chair, Table'),
-                      trailing: const Text('Paid'),
+            : getData.carts.isEmpty
+                ? const Center(
+                    child: Text(
+                      'Empty',
+                      style: TextStyle(color: Colors.black),
                     ),
-                  );
-                },
-              ),
+                  )
+                : ListView.builder(
+                    itemCount: getData.carts.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {},
+                        child: ListTile(
+                          title: Text(getData.carts[index].name),
+                          subtitle: Text(
+                              'Chair ${getData.carts[index].items['chair']}x, Table ${getData.carts[index].items['table']}x'),
+                          trailing: getData.carts[index].isPaid
+                              ? const Text('Paid')
+                              : const Text('Unpaid'),
+                        ),
+                      );
+                    },
+                  ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
