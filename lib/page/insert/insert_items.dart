@@ -23,7 +23,7 @@ class InsertItems extends StatelessWidget {
                     name: 'Chair',
                     price: numberItems.chairPrice.value,
                     color: 'silver',
-                    imageLinkUrl: imageStorage.imageUrl[0],
+                    imagePath: 'assets/items/chair.png',
                     numberItem: Obx(() => Text(
                           numberItems.numberChair.value.toString(),
                         )),
@@ -42,7 +42,7 @@ class InsertItems extends StatelessWidget {
                     name: 'Table',
                     price: numberItems.tablePrice.value,
                     color: 'brown',
-                    imageLinkUrl: imageStorage.imageUrl[1],
+                    imagePath: 'assets/items/table.png',
                     numberItem: Obx(() => Text(
                           numberItems.numberTable.value.toString(),
                         )),

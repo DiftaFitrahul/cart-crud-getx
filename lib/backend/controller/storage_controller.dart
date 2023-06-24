@@ -1,42 +1,25 @@
-import 'package:crud_with_firebase_firestore_storage_getx/backend/constant/item_storage_constant.dart';
+
 import 'package:crud_with_firebase_firestore_storage_getx/backend/storage/storage_functionality.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 
 class StorageController extends GetxController {
-  List imageUrl = [].obs;
-  final List<String> imagePathStorage = [
-    ItemStoragePath.chair,
-    ItemStoragePath.table
-  ];
 
-  RxBool isLoading = false.obs;
 
-  Future<void> getAllImage() async {
+
+  RxBool uploadLoading = false.obs;
+
+  
+
+  Future<void> uploadFileController(String id, PlatformFile pickedFile) async {
     try {
-      for (final path in imagePathStorage) {
-        final result = await StorageFunctionality.getImages(path);
-        imageUrl.add(result);
-      }
+      uploadLoading.value = true;
+      await StorageFunctionality.uploadImage(id, pickedFile);
+      uploadLoading.value = false;
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<void> uploadFileController(PlatformFile pickedFile) async {
-    try {
-      await StorageFunctionality.uploadImage(pickedFile);
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  @override
-  void onInit() async {
-    isLoading.value = true;
-    getAllImage();
-    print('===============');
-    isLoading.value = false;
-    super.onInit();
-  }
+  
 }

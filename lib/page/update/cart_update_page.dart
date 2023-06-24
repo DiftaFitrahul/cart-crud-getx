@@ -2,6 +2,7 @@ import 'package:crud_with_firebase_firestore_storage_getx/backend/firestore/fire
 import 'package:crud_with_firebase_firestore_storage_getx/controller/items_number_price_controller.dart';
 import 'package:crud_with_firebase_firestore_storage_getx/controller/text_editing_controller.dart';
 import 'package:crud_with_firebase_firestore_storage_getx/model/cart_model.dart';
+import 'package:crud_with_firebase_firestore_storage_getx/page/proof_payment_page.dart';
 import 'package:crud_with_firebase_firestore_storage_getx/page/update/update_identity.dart';
 import 'package:crud_with_firebase_firestore_storage_getx/page/update/update_items.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,8 @@ class CartUpdatePage extends StatelessWidget {
     Get.put(StorageController());
     final textController = Get.put(TextController());
     final itemsController = Get.put(NumberItems());
+    itemsController.numberChair.value = cart.items['chair'];
+    itemsController.numberTable.value = cart.items['table'];
     final phoneHeight = MediaQuery.of(context).size.height;
     return DefaultTabController(
       length: 2,
@@ -85,48 +88,92 @@ class CartUpdatePage extends StatelessWidget {
                       UpdateIdentity(cart: cart),
                       UpdateItems(cart: cart)
                     ])),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(double.infinity, 60),
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                          backgroundColor: Colors.black),
-                      child: const Text('Checkout')),
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      if (textController.userNameController.text.isNotEmpty &&
-                          textController.nameController.text.isNotEmpty) {
-                        FirestoreFunctionality.updateCart(CartModel(
-                            documentId: cart.documentId,
-                            userName: textController.userNameController.text,
-                            name: textController.nameController.text,
-                            createdAt: DateTime.now().toString(),
-                            isPaid: false,
-                            items: {
-                              'chair': itemsController.numberChair.value,
-                              'table': itemsController.numberTable.value
-                            })).then((_) => Get.back());
-                      } else {
-                        Get.snackbar('Error', 'Please insert the identity');
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(double.infinity, 60),
-                        backgroundColor: Colors.transparent,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12)),
-                        side: BorderSide(
-                            width: 2, color: Colors.black.withOpacity(0.3))),
-                    child: const Text('Pay Later',
-                        style: TextStyle(color: Colors.black))),
+                cart.isPaid
+                    ? ElevatedButton(
+                        onPressed: null,
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(double.infinity, 60),
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12)),
+                            side: BorderSide(
+                                width: 2,
+                                color: Colors.black.withOpacity(0.3))),
+                        child: const Text('Finish Paid',
+                            style: TextStyle(color: Colors.black)))
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              if (textController
+                                      .userNameController.text.isNotEmpty &&
+                                  textController
+                                      .nameController.text.isNotEmpty &&
+                                  (itemsController.numberChair.value != 0 ||
+                                      itemsController.numberTable.value != 0)) {
+                                FirestoreFunctionality.updateCart(CartModel(
+                                    documentId: cart.documentId,
+                                    userName:
+                                        textController.userNameController.text,
+                                    name: textController.nameController.text,
+                                    createdAt: DateTime.now().toString(),
+                                    isPaid: false,
+                                    items: {
+                                      'chair':
+                                          itemsController.numberChair.value,
+                                      'table': itemsController.numberTable.value
+                                    })).then((_) => Get.to(ProofPaymentPage(
+                                    id: cart.documentId ?? '')));
+                              } else {
+                                Get.snackbar('Error',
+                                    'Please insert the identity and items');
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                                minimumSize: const Size(double.infinity, 60),
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12)),
+                                backgroundColor: Colors.black),
+                            child: const Text('Checkout')),
+                      ),
+                cart.isPaid
+                    ? const SizedBox()
+                    : ElevatedButton(
+                        onPressed: () {
+                          if (textController
+                                  .userNameController.text.isNotEmpty &&
+                              textController.nameController.text.isNotEmpty &&
+                              (itemsController.numberChair.value != 0 ||
+                                  itemsController.numberTable.value != 0)) {
+                            FirestoreFunctionality.updateCart(CartModel(
+                                documentId: cart.documentId,
+                                userName:
+                                    textController.userNameController.text,
+                                name: textController.nameController.text,
+                                createdAt: DateTime.now().toString(),
+                                isPaid: false,
+                                items: {
+                                  'chair': itemsController.numberChair.value,
+                                  'table': itemsController.numberTable.value
+                                })).then((_) => Get.back());
+                          } else {
+                            Get.snackbar('Error',
+                                'Please insert the identity and items');
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(double.infinity, 60),
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12)),
+                            side: BorderSide(
+                                width: 2,
+                                color: Colors.black.withOpacity(0.3))),
+                        child: const Text('Pay Later',
+                            style: TextStyle(color: Colors.black))),
                 const SizedBox(
                   height: 90,
                 )

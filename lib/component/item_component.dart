@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../backend/controller/storage_controller.dart';
 
 class ItemComponent extends StatelessWidget {
-  final String imageLinkUrl;
+  final String imagePath;
   final int price;
   final String name;
   final String color;
@@ -17,7 +17,7 @@ class ItemComponent extends StatelessWidget {
       required this.name,
       required this.color,
       required this.price,
-      required this.imageLinkUrl,
+      required this.imagePath,
       required this.numberItem,
       required this.decrementCallback,
       required this.incrementCallback});
@@ -34,7 +34,7 @@ class ItemComponent extends StatelessWidget {
               child: SizedBox(
                 width: 120,
                 height: 120,
-                child: Image(image: NetworkImage(imageLinkUrl)),
+                child: Image.asset(imagePath),
               )),
           Expanded(
             child: Padding(

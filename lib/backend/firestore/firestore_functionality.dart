@@ -45,12 +45,20 @@ class FirestoreFunctionality {
     }
   }
 
-  static Future<void> deleteCart(CartModel cartModel) async {
+  static Future<void> deleteCart(String documentId) async {
+    try {
+      await firebaseFirestore.collection('carts').doc(documentId).delete();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<void> updatePayment(String documentId) async {
     try {
       await firebaseFirestore
           .collection('carts')
-          .doc(cartModel.documentId)
-          .delete();
+          .doc(documentId)
+          .update({'isPaid': true});
     } catch (e) {
       rethrow;
     }

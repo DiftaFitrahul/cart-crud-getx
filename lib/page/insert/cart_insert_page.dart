@@ -5,9 +5,11 @@ import 'package:crud_with_firebase_firestore_storage_getx/controller/text_editin
 import 'package:crud_with_firebase_firestore_storage_getx/model/cart_model.dart';
 import 'package:crud_with_firebase_firestore_storage_getx/page/insert/insert_identity.dart';
 import 'package:crud_with_firebase_firestore_storage_getx/page/insert/insert_items.dart';
+import 'package:crud_with_firebase_firestore_storage_getx/page/proof_payment_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../backend/controller/firestore_controller.dart';
 import '../../backend/controller/storage_controller.dart';
 
 class CartInsertPage extends StatelessWidget {
@@ -16,6 +18,7 @@ class CartInsertPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(StorageController());
+    final firestoreController = Get.put(FirestoreController());
     final textController = Get.put(TextController());
     final itemsController = Get.put(NumberItems());
     final phoneHeight = MediaQuery.of(context).size.height;
@@ -87,7 +90,23 @@ class CartInsertPage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: ElevatedButton(
                       onPressed: () {
-                        Get.back();
+                        if (textController.userNameController.text.isNotEmpty &&
+                            textController.nameController.text.isNotEmpty &&(itemsController.numberChair.value != 0 || itemsController.numberTable.value != 0)) {
+                          FirestoreFunctionality.addCart(CartModel(
+                              userName: textController.userNameController.text,
+                              name: textController.nameController.text,
+                              createdAt: DateTime.now().toString(),
+                              isPaid: false,
+                              items: {
+                                'chair': itemsController.numberChair.value,
+                                'table': itemsController.numberTable.value
+                              })).then((_) => Get.to(ProofPaymentPage(
+                                id: firestoreController.carts.last.documentId ??
+                                    '',
+                              )));
+                        } else {
+                          Get.snackbar('Error', 'Please insert the identity and items');
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                           minimumSize: const Size(double.infinity, 60),
@@ -100,7 +119,7 @@ class CartInsertPage extends StatelessWidget {
                 ElevatedButton(
                     onPressed: () {
                       if (textController.userNameController.text.isNotEmpty &&
-                          textController.nameController.text.isNotEmpty) {
+                            textController.nameController.text.isNotEmpty &&(itemsController.numberChair.value != 0 || itemsController.numberTable.value != 0)) {
                         FirestoreFunctionality.addCart(CartModel(
                             userName: textController.userNameController.text,
                             name: textController.nameController.text,
@@ -111,7 +130,7 @@ class CartInsertPage extends StatelessWidget {
                               'table': itemsController.numberTable.value
                             })).then((_) => Get.back());
                       } else {
-                        Get.snackbar('Error', 'Please insert the identity');
+                        Get.snackbar('Error', 'Please insert the identity and items');
                       }
                     },
                     style: ElevatedButton.styleFrom(
