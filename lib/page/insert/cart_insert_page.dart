@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crud_with_firebase_firestore_storage_getx/backend/firestore/firestore_functionality.dart';
 import 'package:crud_with_firebase_firestore_storage_getx/controller/items_number_price_controller.dart';
 import 'package:crud_with_firebase_firestore_storage_getx/controller/text_editing_controller.dart';

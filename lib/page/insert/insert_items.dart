@@ -1,4 +1,3 @@
-import 'package:crud_with_firebase_firestore_storage_getx/backend/controller/storage_controller.dart';
 import 'package:crud_with_firebase_firestore_storage_getx/component/item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,7 +10,6 @@ class InsertItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final numberItems = Get.put(NumberItems());
-    final imageStorage = Get.put(StorageController());
     return Column(
       children: [
         SizedBox(
@@ -23,7 +21,7 @@ class InsertItems extends StatelessWidget {
                     name: 'Chair',
                     price: numberItems.chairPrice.value,
                     color: 'silver',
-                    imagePath: 'assets/items/chair.png',
+                    imagePath: "assets/items/chair.png",
                     numberItem: Obx(() => Text(
                           numberItems.numberChair.value.toString(),
                         )),
@@ -42,7 +40,7 @@ class InsertItems extends StatelessWidget {
                     name: 'Table',
                     price: numberItems.tablePrice.value,
                     color: 'brown',
-                    imagePath: 'assets/items/table.png',
+                    imagePath: "assets/items/table.png",
                     numberItem: Obx(() => Text(
                           numberItems.numberTable.value.toString(),
                         )),

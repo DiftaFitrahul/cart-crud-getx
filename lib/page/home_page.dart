@@ -1,7 +1,5 @@
-import 'package:crud_with_firebase_firestore_storage_getx/backend/controller/storage_controller.dart';
 import 'package:crud_with_firebase_firestore_storage_getx/backend/firestore/firestore_functionality.dart';
 import 'package:crud_with_firebase_firestore_storage_getx/backend/storage/storage_functionality.dart';
-import 'package:crud_with_firebase_firestore_storage_getx/page/proof_payment_page.dart';
 import 'package:crud_with_firebase_firestore_storage_getx/page/insert/cart_insert_page.dart';
 import 'package:crud_with_firebase_firestore_storage_getx/page/update/cart_update_page.dart';
 import 'package:flutter/material.dart';

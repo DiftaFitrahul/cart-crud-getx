@@ -1,4 +1,3 @@
-import 'package:crud_with_firebase_firestore_storage_getx/backend/controller/storage_controller.dart';
 import 'package:crud_with_firebase_firestore_storage_getx/component/item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,7 +12,6 @@ class UpdateItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final numberItems = Get.put(NumberItems());
-    final imageStorage = Get.put(StorageController());
 
     return Column(
       children: [

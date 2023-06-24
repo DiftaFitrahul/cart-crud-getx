@@ -1,8 +1,4 @@
-import 'package:crud_with_firebase_firestore_storage_getx/controller/items_number_price_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
-import '../backend/controller/storage_controller.dart';
 
 class ItemComponent extends StatelessWidget {
   final String imagePath;
