@@ -28,4 +28,31 @@ class FirestoreFunctionality {
       return carts;
     });
   }
+
+  static Future<void> updateCart(CartModel cartModel) async {
+    try {
+      await firebaseFirestore
+          .collection('carts')
+          .doc(cartModel.documentId)
+          .update((CartPayload(
+              userName: cartModel.userName,
+              name: cartModel.name,
+              createdAt: cartModel.createdAt,
+              isPaid: cartModel.isPaid,
+              items: cartModel.items)));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<void> deleteCart(CartModel cartModel) async {
+    try {
+      await firebaseFirestore
+          .collection('carts')
+          .doc(cartModel.documentId)
+          .delete();
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

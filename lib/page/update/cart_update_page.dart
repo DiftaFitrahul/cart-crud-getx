@@ -1,17 +1,17 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crud_with_firebase_firestore_storage_getx/backend/firestore/firestore_functionality.dart';
 import 'package:crud_with_firebase_firestore_storage_getx/controller/items_number_price_controller.dart';
 import 'package:crud_with_firebase_firestore_storage_getx/controller/text_editing_controller.dart';
 import 'package:crud_with_firebase_firestore_storage_getx/model/cart_model.dart';
-import 'package:crud_with_firebase_firestore_storage_getx/page/insert/insert_identity.dart';
-import 'package:crud_with_firebase_firestore_storage_getx/page/insert/insert_items.dart';
+import 'package:crud_with_firebase_firestore_storage_getx/page/update/update_identity.dart';
+import 'package:crud_with_firebase_firestore_storage_getx/page/update/update_items.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../backend/controller/storage_controller.dart';
 
-class CartInsertPage extends StatelessWidget {
-  const CartInsertPage({super.key});
+class CartUpdatePage extends StatelessWidget {
+  final CartModel cart;
+  const CartUpdatePage({super.key, required this.cart});
 
   @override
   Widget build(BuildContext context) {
@@ -81,8 +81,10 @@ class CartInsertPage extends StatelessWidget {
               children: [
                 SizedBox(
                     height: phoneHeight * 0.5,
-                    child: const TabBarView(
-                        children: [InsertIdentity(), InsertItems()])),
+                    child: TabBarView(children: [
+                      UpdateIdentity(cart: cart),
+                      UpdateItems(cart: cart)
+                    ])),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: ElevatedButton(
@@ -101,7 +103,8 @@ class CartInsertPage extends StatelessWidget {
                     onPressed: () {
                       if (textController.userNameController.text.isNotEmpty &&
                           textController.nameController.text.isNotEmpty) {
-                        FirestoreFunctionality.addCart(CartModel(
+                        FirestoreFunctionality.updateCart(CartModel(
+                            documentId: cart.documentId,
                             userName: textController.userNameController.text,
                             name: textController.nameController.text,
                             createdAt: DateTime.now().toString(),

@@ -35,6 +35,7 @@ class StorageController extends GetxController {
   void onInit() async {
     isLoading.value = true;
     getAllImage();
+    print('===============');
     isLoading.value = false;
     super.onInit();
   }
