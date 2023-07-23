@@ -19,4 +19,6 @@ class FirestoreController extends GetxController {
     isLoading.value = true;
     super.onInit();
   }
+
+
 }
