@@ -26,7 +26,7 @@ class CartUpdatePage extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(phoneHeight * 0.15),
+          preferredSize: Size.fromHeight(phoneHeight * 0.18),
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -83,7 +83,7 @@ class CartUpdatePage extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                    height: phoneHeight * 0.5,
+                    height: phoneHeight * 0.52,
                     child: TabBarView(children: [
                       UpdateIdentity(cart: cart),
                       UpdateItems(cart: cart)

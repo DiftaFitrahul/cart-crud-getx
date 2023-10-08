@@ -8,11 +8,12 @@ class ItemSellComponent extends StatelessWidget {
       required this.numberChair,
       required this.numberTable,
       required this.onDelete,
-      required this.isPaid});
+      required this.isPaid,
+      required this.onUpdate});
   final String name;
   final int numberChair;
   final int numberTable;
-  final VoidCallback onDelete;
+  final VoidCallback onDelete, onUpdate;
   final bool isPaid;
 
   @override
@@ -25,18 +26,21 @@ class ItemSellComponent extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text.rich(TextSpan(children: [
-                TextSpan(
-                  text: "$name ",
-                  style: const TextStyle(fontSize: 20),
-                ),
-                TextSpan(
-                    text: isPaid ? "Paid" : "Unpaid",
-                    style: TextStyle(
-                        color: isPaid ? Colors.blue : Colors.red,
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.w900))
-              ])),
+              InkWell(
+                onTap: onUpdate,
+                child: Text.rich(TextSpan(children: [
+                  TextSpan(
+                    text: "$name ",
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                  TextSpan(
+                      text: isPaid ? "Paid" : "Unpaid",
+                      style: TextStyle(
+                          color: isPaid ? Colors.blue : Colors.red,
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.w900))
+                ])),
+              ),
               IconButton(
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),

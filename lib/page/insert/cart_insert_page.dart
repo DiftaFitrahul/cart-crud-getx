@@ -25,7 +25,7 @@ class CartInsertPage extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(phoneHeight * 0.15),
+          preferredSize: Size.fromHeight(phoneHeight * 0.18),
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -82,15 +82,17 @@ class CartInsertPage extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                    height: phoneHeight * 0.5,
+                    height: phoneHeight * 0.52,
                     child: const TabBarView(
                         children: [InsertIdentity(), InsertItems()])),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  padding: const EdgeInsets.symmetric(vertical: 15),
                   child: ElevatedButton(
                       onPressed: () {
                         if (textController.userNameController.text.isNotEmpty &&
-                            textController.nameController.text.isNotEmpty &&(itemsController.numberChair.value != 0 || itemsController.numberTable.value != 0)) {
+                            textController.nameController.text.isNotEmpty &&
+                            (itemsController.numberChair.value != 0 ||
+                                itemsController.numberTable.value != 0)) {
                           FirestoreFunctionality.addCart(CartModel(
                               userName: textController.userNameController.text,
                               name: textController.nameController.text,
@@ -104,7 +106,8 @@ class CartInsertPage extends StatelessWidget {
                                     '',
                               )));
                         } else {
-                          Get.snackbar('Error', 'Please insert the identity and items');
+                          Get.snackbar(
+                              'Error', 'Please insert the identity and items');
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -118,7 +121,9 @@ class CartInsertPage extends StatelessWidget {
                 ElevatedButton(
                     onPressed: () {
                       if (textController.userNameController.text.isNotEmpty &&
-                            textController.nameController.text.isNotEmpty &&(itemsController.numberChair.value != 0 || itemsController.numberTable.value != 0)) {
+                          textController.nameController.text.isNotEmpty &&
+                          (itemsController.numberChair.value != 0 ||
+                              itemsController.numberTable.value != 0)) {
                         FirestoreFunctionality.addCart(CartModel(
                             userName: textController.userNameController.text,
                             name: textController.nameController.text,
@@ -129,7 +134,8 @@ class CartInsertPage extends StatelessWidget {
                               'table': itemsController.numberTable.value
                             })).then((_) => Get.back());
                       } else {
-                        Get.snackbar('Error', 'Please insert the identity and items');
+                        Get.snackbar(
+                            'Error', 'Please insert the identity and items');
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -142,9 +148,6 @@ class CartInsertPage extends StatelessWidget {
                             width: 2, color: Colors.black.withOpacity(0.3))),
                     child: const Text('Pay Later',
                         style: TextStyle(color: Colors.black))),
-                const SizedBox(
-                  height: 90,
-                )
               ],
             ),
           ),

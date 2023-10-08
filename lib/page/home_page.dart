@@ -46,6 +46,9 @@ class HomePage extends StatelessWidget {
                           name: getData.carts[index].name,
                           numberChair: getData.carts[index].items['chair'],
                           numberTable: getData.carts[index].items['table'],
+                          onUpdate: () {
+                            Get.to(CartUpdatePage(cart: getData.carts[index]));
+                          },
                           onDelete: () {
                             final cartId = getData.carts[index].documentId;
                             FirestoreFunctionality.deleteCart(
